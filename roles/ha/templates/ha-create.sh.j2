@@ -1,0 +1,68 @@
+#!/bin/bash
+sudo docker create \
+--network=host \
+--uts=host \
+--memory-swap=-1 \
+--ulimit core=-1 \
+--ulimit memlock=-1 \
+{% if ha_role == "monitoring" %}
+{% set scale_tier = "100" %}
+{% endif %}
+{% if scale_tier == "1k" %}
+--cpus=2 \
+--memory=6g \
+--shm-size=2g \
+--ulimit nofile=2448:10192 \
+--env 'system_scaling_maxconnectioncount=1000' \
+{% elif scale_tier == "10k" %}
+--cpus=4 \
+--memory=14g \
+--shm-size=2g \
+--ulimit nofile=2448:42192 \
+--env 'system_scaling_maxconnectioncount=10000' \
+{% elif scale_tier == "100k" %}
+--cpus=8 \
+--memory=29g \
+--shm-size=3.3g \
+--ulimit nofile=2448:222192 \
+--env 'system_scaling_maxconnectioncount=100000' \
+{% elif scale_tier == "200k" %}
+--cpus=12 \
+--memory=54g \
+--shm-size=3.3g \
+--ulimit nofile=2448:422192 \
+--env 'system_scaling_maxconnectioncount=200000' \
+{% else %}
+--shm-size=1g \
+--ulimit nofile=2448:6592 \
+--cpus=2 \
+--memory=2g \
+--env 'system_scaling_maxconnectioncount=100' \
+{% endif %}
+--env 'username_admin_globalaccesslevel=admin' \
+--env 'username_admin_password=admin' \
+{% if ha_role == "primary" %}
+--env 'routername=pp{{ router_name_suffix }}' \
+--env 'nodetype=message_routing' \
+--env 'configsync_enable=yes' \
+--env 'redundancy_matelink_connectvia={{ backup_ip }}' \
+--env 'redundancy_activestandbyrole={{ ha_role }}' \
+{% elif ha_role == "backup" %}
+--env 'routername=bb{{ router_name_suffix }}' \
+--env 'nodetype=message_routing' \
+--env 'configsync_enable=yes' \
+--env 'redundancy_matelink_connectvia={{ primary_ip }}' \
+--env 'redundancy_activestandbyrole={{ ha_role }}' \
+{% elif ha_role == "monitoring" %}
+--env 'routername=mm{{ router_name_suffix }}' \
+--env 'nodetype=monitoring' \
+{% endif %}
+--env 'redundancy_enable=yes' \
+--env 'redundancy_group_node_pp{{ router_name_suffix }}_connectvia={{ primary_ip }}' \
+--env 'redundancy_group_node_pp{{ router_name_suffix }}_nodetype=message_routing' \
+--env 'redundancy_group_node_bb{{ router_name_suffix }}_connectvia={{ backup_ip }}' \
+--env 'redundancy_group_node_bb{{ router_name_suffix }}_nodetype=message_routing' \
+--env 'redundancy_group_node_mm{{ router_name_suffix }}_connectvia={{ monitoring_ip }}' \
+--env 'redundancy_group_node_mm{{ router_name_suffix }}_nodetype=monitoring' \
+--env 'redundancy_group_password=password' \
+--name=solace {{ vmr_version.stdout }}

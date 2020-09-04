@@ -1,0 +1,24 @@
+    - name: Upload the PubSub+ Enterprise Evaluation Image
+      copy:
+        src: "{{solace_docker_image_full_path}}"
+        dest: /tmp/PUBSUB_DOCKER
+
+    - name: Stop Docker
+      systemd:
+        state: stopped
+        name: docker
+
+    - name: Set Storage-Driver & IPtables
+      copy: 
+        src: files/daemon.json
+        dest: /etc/docker/daemon.json
+
+    - name: Start Docker again
+      systemd:
+        state: started
+        name: docker
+        daemon_reload: yes
+        enabled: yes
+    
+    - name: Load the image into Docker
+      shell: docker load -i /tmp/PUBSUB_DOCKER

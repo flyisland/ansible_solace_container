@@ -1,0 +1,6 @@
+- name: setup pubsub HA
+  hosts: all
+  gather_facts: no
+  become: yes
+  roles:
+    - ha

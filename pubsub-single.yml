@@ -1,0 +1,8 @@
+- name: install pubsub software on centos
+  hosts: all
+  gather_facts: no
+  become: yes
+  roles:
+    - docker
+    - vmr
+    - container

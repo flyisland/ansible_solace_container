@@ -1,0 +1,48 @@
+---
+    - name: Uninstall old versions of dockers
+      yum:
+        name: "{{ packages }}"
+        state: absent
+      vars:
+        packages:
+        - docker
+        - docker-client
+        - docker-client-latest
+        - docker-common
+        - docker-latest
+        - docker-latest-logrotate
+        - docker-logrotate
+        - docker-selinux
+        - docker-engine-selinux
+        - docker-engine
+
+    - name: Install required packages
+      yum:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+        - yum-utils
+        - device-mapper-persistent-data
+        - lvm2
+
+    - name: Add stable repository
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+        force: yes
+        owner: root
+        group: root
+        mode: 0644
+      become: yes
+
+    - name: Install Docker CE 
+      yum:
+        name: docker-ce
+        state: present
+      become: yes
+
+    - name: Start Docker
+      systemd:
+        state: started
+        name: docker

@@ -1,0 +1,2 @@
+- `assert-master router` automatically after the HA triple is created
+- support ubuntu

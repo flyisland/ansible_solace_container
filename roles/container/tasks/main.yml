@@ -1,0 +1,15 @@
+    - name: Get vmr version
+      shell: docker images | grep solace | awk '{printf "%s:%s", $1, $2}'
+      register: vmr_version
+
+    - name: Set Container Create Options
+      template: 
+        src: docker-create.sh.j2
+        dest: /tmp/docker-create.sh
+        force: yes
+        owner: root
+        group: root
+        mode: u+x
+
+    - name: Create the Container
+      shell: /tmp/docker-create.sh && docker start solace

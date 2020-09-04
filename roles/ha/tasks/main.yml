@@ -1,0 +1,22 @@
+    - debug:
+        msg: "Creating **{{ ha_role }}** container of the HA group"
+      
+    - name: remove the existing "solace" container
+      shell: docker rm solace -f
+      ignore_errors: yes 
+
+    - name: Get vmr version
+      shell: docker images | grep solace | awk '{printf "%s:%s", $1, $2}'
+      register: vmr_version
+
+    - name: Set Container Create Options
+      template: 
+        src: ha-create.sh.j2
+        dest: /tmp/ha-create.sh
+        force: yes
+        owner: root
+        group: root
+        mode: u+x
+
+    - name: Create the Container
+      shell: /tmp/ha-create.sh && docker start solace

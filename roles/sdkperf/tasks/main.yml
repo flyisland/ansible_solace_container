@@ -1,0 +1,37 @@
+- name: Install required packages
+  become: yes
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - java-devel
+    - unzip
+
+- name: Set JAVA_HOME environment variable
+  lineinfile: 
+    dest: '~/.bashrc'
+    regexp: '^#?\s*export JAVA_HOME=(.*)$'
+    line: 'export JAVA_HOME=/usr/lib/jvm/java'
+    state: present
+
+- name: install SDKPERF_JAVA
+  unarchive:
+    src: "{{download_host}}/download/SDKPERF_JAVA"
+    dest: ~/
+    remote_src: yes        
+    validate_certs: no
+
+- name: install SDKPERF_MQTT
+  unarchive:
+    src: "{{download_host}}/download/SDKPERF_MQTT"
+    dest: ~/
+    remote_src: yes        
+    validate_certs: no
+
+- name: install SDKPERF_C
+  unarchive:
+    src: "{{download_host}}/download/SDKPERF_C_LINUX64"
+    dest: ~/
+    remote_src: yes        
+    validate_certs: no
