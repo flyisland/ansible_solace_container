@@ -1,1 +1,2 @@
 - support ubuntu
+- mirgrate to [Pre-Shared Keys](https://docs.solace.com/Configuring-and-Managing/Pre-Shared-Keys-SMB.htm)
