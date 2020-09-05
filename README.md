@@ -1,4 +1,4 @@
-# Provision Solace PS+ Container (HA) on Linux
+# Provision Solace PS+ Container (HA) on Centos
 
 ## Ansible Roles
 
