@@ -20,3 +20,15 @@
 
     - name: Create the Container
       shell: /tmp/ha-create.sh && docker start solace
+
+    - name: Prepare the assert-primary.sh file
+      template: 
+        src: assert-primary.j2.sh
+        dest: /tmp/assert-primary.sh
+        force: yes
+        mode: u+x
+      when: ha_role == "primary"
+
+    - name: Assert the primary event broker’s configuration
+      shell: /tmp/assert-primary.sh
+      when: ha_role == "primary"
