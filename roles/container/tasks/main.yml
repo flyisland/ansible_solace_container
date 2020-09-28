@@ -2,6 +2,11 @@
       shell: docker images | grep solace | awk '{printf "%s:%s", $1, $2}'
       register: vmr_version
 
+    - name: Set default scale tier
+      set_fact:
+        scale_tier: "1k"
+      when: scale_tier is undefined
+
     - name: Set Container Create Options
       template: 
         src: docker-create.sh.j2
