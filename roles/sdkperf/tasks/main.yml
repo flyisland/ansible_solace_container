@@ -17,21 +17,28 @@
 
 - name: install SDKPERF_JAVA
   unarchive:
-    src: "{{download_host}}/download/SDKPERF_JAVA"
+    src: "https://products.solace.com/download/SDKPERF_JAVA"
     dest: ~/
     remote_src: yes        
     validate_certs: no
 
 - name: install SDKPERF_MQTT
   unarchive:
-    src: "{{download_host}}/download/SDKPERF_MQTT"
+    src: "https://products.solace.com/download/SDKPERF_MQTT"
     dest: ~/
     remote_src: yes        
     validate_certs: no
 
 - name: install SDKPERF_C
   unarchive:
-    src: "{{download_host}}/download/SDKPERF_C_LINUX64"
+    src: "https://products.solace.com/download/SDKPERF_C_LINUX64"
+    dest: ~/
+    remote_src: yes        
+    validate_certs: no
+
+- name: install JMS_AMQP
+  unarchive:
+    src: "https://products.solace.com/download/SDKPERF_JMSAMQP"
     dest: ~/
     remote_src: yes        
     validate_certs: no
