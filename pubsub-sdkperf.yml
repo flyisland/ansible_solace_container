@@ -1,0 +1,6 @@
+- name: install pubsub software on centos
+  hosts: all
+  gather_facts: no
+  become: no
+  roles:
+    - sdkperf
