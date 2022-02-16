@@ -36,6 +36,13 @@
     remote_src: yes        
     validate_certs: no
 
+- name: install JMS
+  unarchive:
+    src: "https://products.solace.com/download/SDKPERF_JMS"
+    dest: ~/
+    remote_src: yes        
+    validate_certs: no
+
 - name: install JMS_AMQP
   unarchive:
     src: "https://products.solace.com/download/SDKPERF_JMSAMQP"
