@@ -64,5 +64,5 @@ sudo docker create \
 --env 'redundancy_group_node_bb{{ router_name_suffix }}_nodetype=message_routing' \
 --env 'redundancy_group_node_mm{{ router_name_suffix }}_connectvia={{ monitoring_ip }}' \
 --env 'redundancy_group_node_mm{{ router_name_suffix }}_nodetype=monitoring' \
---env 'redundancy_group_password=password' \
+--env 'redundancy_authentication_presharedkey_key=U09MQUNFIFBSRSBTSEFSRUQgS0VZIEZPUiBQT0MK' \
 --name=solace {{ vmr_version.stdout }}
