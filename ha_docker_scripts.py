@@ -24,7 +24,7 @@ def main():
     )
     template = e.get_template(filename)
 
-    roles = ["primary", "backup", "monitor"]
+    roles = ["primary", "backup", "monitoring"]
     for role in roles:
         vars["ha_role"] = role
         docker_script = template.render(vars)
