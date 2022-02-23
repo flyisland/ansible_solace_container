@@ -8,11 +8,11 @@ def main():
     cp.read("./hosts")
     all_vars = cp["all:vars"]
     vars = {
-        "scale_tier": all_vars["scale_tier"],
-        "router_name_suffix": all_vars["router_name_suffix"],
-        "primary_ip": all_vars["primary_ip"],
-        "backup_ip": all_vars["backup_ip"],
-        "monitoring_ip": all_vars["monitoring_ip"],
+        "scale_tier": all_vars["scale_tier"].strip('"'),
+        "router_name_suffix": all_vars["router_name_suffix"].strip('"'),
+        "primary_ip": all_vars["primary_ip"].strip('"'),
+        "backup_ip": all_vars["backup_ip"].strip('"'),
+        "monitoring_ip": all_vars["monitoring_ip"].strip('"'),
         "vmr_version": {"stdout": "solace/solace-pubsub-standard"},
     }
 
