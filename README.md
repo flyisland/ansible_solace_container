@@ -53,3 +53,11 @@ monitoring_ip=10.0.0.7
 10.0.0.6 ha_role=backup
 10.0.0.7 ha_role=monitoring
 ```
+
+## References
+
+- [Configuring HA Groups Using Configuration Keys](https://docs.solace.com/Configuring-and-Managing/SW-Broker-Specific-Config/Config-Keys-HA-Triplets.htm)
+- [Configuration Keys](https://docs.solace.com/Configuring-and-Managing/SW-Broker-Specific-Config/Configuration-Keys-Reference.htm)
+- [Resource Calculator for PubSub+ Software Event Brokers](https://docs.solace.com/Assistance-Tools/Resource-Calculator/pubsubplus-resource-calculator.html)
+- [Docker Create Options](https://docs.solace.com/Configuring-and-Managing/SW-Broker-Specific-Config/Docker-Tasks/Config-Docker-Create-Options.htm)
+- [CentOS on AWS](https://docs.solace.com/Solace-SW-Broker-Set-Up/Docker-Containers/Set-Up-Docker-Container-CentOS-EC2.htm)
