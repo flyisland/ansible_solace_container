@@ -10,6 +10,8 @@
 
 ## Provision a single docker container
 
+Please check Check [Resource Calculator for PubSub+ Software Event Brokers](https://docs.solace.com/Assistance-Tools/Resource-Calculator/pubsubplus-resource-calculator.html) first to make sure you meet the resource requirement.
+
 You should download the docker image first and put it in you local host, then update the `hosts` file according to your evn, then run the command `ansible-playbook -vv pubsub-single.yml`
 
 ### `hosts` file example
@@ -17,6 +19,7 @@ You should download the docker image first and put it in you local host, then up
 ```ini
 [all:vars]
 ansible_connection=ssh
+# 100, 1k, 10k, 100k, 200k
 scale_tier="1k"
 # using 'solace/solace-pubsub-standard' image by default,
 # un-comment below setting to use a specified image
@@ -29,6 +32,8 @@ scale_tier="1k"
 Where the `scale_tier` is choose from "1k", "10k", "100k" and "200k", the default value is "100".
 
 ## Provision a High Availability (HA) triple.
+
+Please check Check [Resource Calculator for PubSub+ Software Event Brokers](https://docs.solace.com/Assistance-Tools/Resource-Calculator/pubsubplus-resource-calculator.html) first to make sure you meet the resource requirement.
 
 Run `ansible-playbook -vv pubsub-single.yml` first to load the Solace docker image into each host first, then run `ansible-playbook -vv pubsub-ha.yml` to create an HA triple.
 
