@@ -1,42 +1,29 @@
 #!/bin/bash
 sudo docker create \
+--restart=unless-stopped \
 --network=host \
 --uts=host \
 --memory-swap=-1 \
 --ulimit core=-1 \
+--shm-size=1g \
 --ulimit memlock=-1 \
 {% if ha_role == "monitoring" %}
 {% set scale_tier = "100" %}
 {% endif %}
 {% if scale_tier == "1k" %}
---cpus=2 \
---memory=6g \
---shm-size=2g \
 --ulimit nofile=2448:10192 \
 --env 'system_scaling_maxconnectioncount=1000' \
 {% elif scale_tier == "10k" %}
---cpus=4 \
---memory=14g \
---shm-size=2g \
 --ulimit nofile=2448:42192 \
 --env 'system_scaling_maxconnectioncount=10000' \
 {% elif scale_tier == "100k" %}
---cpus=8 \
---memory=29g \
---shm-size=3.3g \
 --ulimit nofile=2448:222192 \
 --env 'system_scaling_maxconnectioncount=100000' \
 {% elif scale_tier == "200k" %}
---cpus=12 \
---memory=54g \
---shm-size=3.3g \
 --ulimit nofile=2448:422192 \
 --env 'system_scaling_maxconnectioncount=200000' \
 {% else %}
---shm-size=1g \
 --ulimit nofile=2448:6592 \
---cpus=2 \
---memory=2g \
 --env 'system_scaling_maxconnectioncount=100' \
 {% endif %}
 --env 'username_admin_globalaccesslevel=admin' \
