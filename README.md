@@ -17,10 +17,10 @@ You should download the docker image first and put it in you local host, then up
 ```ini
 [all:vars]
 ansible_connection=ssh
-ansible_user=solace
-ansible_ssh_pass=password
 scale_tier="1k"
-solace_docker_image_full_path="/tmp/solace-pubsub-evaluation-9.3.1.8-docker.tar.gz"
+# using 'solace/solace-pubsub-standard' image by default,
+# un-comment below setting to use a specified image
+# solace_docker_image_full_path="/tmp/solace-pubsub-evaluation-9.3.1.8-docker.tar.gz"
 
 [all]
 10.0.0.1
@@ -39,10 +39,10 @@ Run `ansible-playbook -vv pubsub-single.yml` first to load the Solace docker ima
 ```ini
 [all:vars]
 ansible_connection=ssh
-ansible_user=solace
-ansible_ssh_pass=password
 scale_tier="1k"
-solace_docker_image_full_path="/tmp/solace-pubsub-evaluation-9.3.1.8-docker.tar.gz"
+# using 'solace/solace-pubsub-standard' image by default,
+# un-comment below setting to use a specified image
+# solace_docker_image_full_path="/tmp/solace-pubsub-evaluation-9.3.1.8-docker.tar.gz"
 router_name_suffix=test
 primary_ip=10.0.0.5
 backup_ip=10.0.0.6

@@ -1,30 +1,14 @@
-    - name: Stop Docker
-      systemd:
-        state: stopped
-        name: docker
+# [Docker for Linux](https://docs.solace.com/Solace-SW-Broker-Set-Up/Docker-Containers/Set-Up-Single-Linux-Container.htm)
+- name: Upload the PubSub+ Image
+  copy:
+    src: "{{solace_docker_image_full_path}}"
+    dest: /tmp/PUBSUB_DOCKER
+  when: solace_docker_image_full_path is defined
 
-    - name: Set Storage-Driver & IPtables
-      copy: 
-        src: files/daemon.json
-        dest: /etc/docker/daemon.json
+- name: Load the image into Docker
+  shell: docker load -i /tmp/PUBSUB_DOCKER
+  when: solace_docker_image_full_path is defined
 
-    - name: Start Docker again
-      systemd:
-        state: started
-        name: docker
-        daemon_reload: yes
-        enabled: yes
-    
-    - name: Upload the PubSub+ Enterprise Evaluation Image
-      copy:
-        src: "{{solace_docker_image_full_path}}"
-        dest: /tmp/PUBSUB_DOCKER
-      when: solace_docker_image_full_path is defined
-
-    - name: Load the image into Docker
-      shell: docker load -i /tmp/PUBSUB_DOCKER
-      when: solace_docker_image_full_path is defined
-
-    - name: Pull solace docker image
-      shell: docker pull solace/solace-pubsub-standard
-      when: solace_docker_image_full_path is undefined
+- name: Pull the Solace PubSub+ standard image
+  shell: docker pull solace/solace-pubsub-standard
+  when: solace_docker_image_full_path is undefined
