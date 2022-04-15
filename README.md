@@ -54,6 +54,15 @@ monitoring_ip=10.0.0.7
 10.0.0.7 ha_role=monitoring
 ```
 
+## Script to create docker commands for crating HA deployment
+
+Create docker commands based parameters from `./hosts` file.
+
+```bash
+> poetry shell
+> python ha_docker_scripts.py
+```
+
 ## References
 
 - [Configuring HA Groups Using Configuration Keys](https://docs.solace.com/Configuring-and-Managing/SW-Broker-Specific-Config/Config-Keys-HA-Triplets.htm)
