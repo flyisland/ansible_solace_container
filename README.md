@@ -4,7 +4,7 @@
 
 - docker: Install docker on the hosts
 - image: Load the Solace docker image
-- container: Create the solace container and start it
+- single: Create a solace container and start it
 - ha: Create a solace PS+ HA triple
 - sdkperf: Install sdkperf on the hosts
 
