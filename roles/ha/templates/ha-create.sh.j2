@@ -45,13 +45,11 @@ sudo docker create \
 --env 'routername=pp{{ router_name_suffix }}' \
 --env 'nodetype=message_routing' \
 --env 'configsync_enable=yes' \
---env 'redundancy_matelink_connectvia={{ backup_ip }}' \
 --env 'redundancy_activestandbyrole={{ ha_role }}' \
 {% elif ha_role == "backup" %}
 --env 'routername=bb{{ router_name_suffix }}' \
 --env 'nodetype=message_routing' \
 --env 'configsync_enable=yes' \
---env 'redundancy_matelink_connectvia={{ primary_ip }}' \
 --env 'redundancy_activestandbyrole={{ ha_role }}' \
 {% elif ha_role == "monitoring" %}
 --env 'routername=mm{{ router_name_suffix }}' \
