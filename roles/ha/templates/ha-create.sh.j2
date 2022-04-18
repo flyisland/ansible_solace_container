@@ -1,3 +1,4 @@
+# https://docs.solace.com/Configuring-and-Managing/Pre-Shared-Keys-SMB.htm
 #!/bin/bash
 sudo docker create \
 --network=host \
@@ -28,25 +29,25 @@ sudo docker create \
 --env 'username_admin_globalaccesslevel=admin' \
 --env 'username_admin_password=admin' \
 {% if ha_role == "primary" %}
---env 'routername=pp{{ router_name_suffix }}' \
+--env 'routername={{ router_name_suffix }}primary' \
 --env 'nodetype=message_routing' \
 --env 'configsync_enable=yes' \
 --env 'redundancy_activestandbyrole={{ ha_role }}' \
 {% elif ha_role == "backup" %}
---env 'routername=bb{{ router_name_suffix }}' \
+--env 'routername={{ router_name_suffix }}backup' \
 --env 'nodetype=message_routing' \
 --env 'configsync_enable=yes' \
 --env 'redundancy_activestandbyrole={{ ha_role }}' \
 {% elif ha_role == "monitoring" %}
---env 'routername=mm{{ router_name_suffix }}' \
+--env 'routername={{ router_name_suffix }}monitor' \
 --env 'nodetype=monitoring' \
 {% endif %}
 --env 'redundancy_enable=yes' \
---env 'redundancy_group_node_pp{{ router_name_suffix }}_connectvia={{ primary_ip }}' \
---env 'redundancy_group_node_pp{{ router_name_suffix }}_nodetype=message_routing' \
---env 'redundancy_group_node_bb{{ router_name_suffix }}_connectvia={{ backup_ip }}' \
---env 'redundancy_group_node_bb{{ router_name_suffix }}_nodetype=message_routing' \
---env 'redundancy_group_node_mm{{ router_name_suffix }}_connectvia={{ monitoring_ip }}' \
---env 'redundancy_group_node_mm{{ router_name_suffix }}_nodetype=monitoring' \
---env 'redundancy_authentication_presharedkey_key=U09MQUNFIFBSRSBTSEFSRUQgS0VZIEZPUiBQT0MK' \
+--env 'redundancy_group_node_{{ router_name_suffix }}primary_connectvia={{ primary_ip }}' \
+--env 'redundancy_group_node_{{ router_name_suffix }}primary_nodetype=message_routing' \
+--env 'redundancy_group_node_{{ router_name_suffix }}backup_connectvia={{ backup_ip }}' \
+--env 'redundancy_group_node_{{ router_name_suffix }}backup_nodetype=message_routing' \
+--env 'redundancy_group_node_{{ router_name_suffix }}monitor_connectvia={{ monitoring_ip }}' \
+--env 'redundancy_group_node_{{ router_name_suffix }}monitor_nodetype=monitoring' \
+--env 'redundancy_authentication_presharedkey_key=VGhpcyBpcyBhIFByZS1TaGFyZWQgQXV0aGVudGljYXRpb24gS2V5IGZvciBQb0MK' \
 --name=solace {{ vmr_version.stdout }}
