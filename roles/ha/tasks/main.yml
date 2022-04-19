@@ -1,34 +1,34 @@
-    - debug:
-        msg: "Creating **{{ ha_role }}** container of the HA group"
-      
-    - name: remove the existing "solace" container
-      shell: docker rm solace -f
-      ignore_errors: yes 
+- debug:
+    msg: "Creating **{{ ha_role }}** container of the HA group"
 
-    - name: Get vmr version
-      shell: docker images | grep solace | awk '{printf "%s:%s", $1, $2}'
-      register: vmr_version
+- name: remove the existing "solace" container
+  shell: docker rm solace -f
+  ignore_errors: yes
 
-    - name: Set Container Create Options
-      template: 
-        src: ha-create.sh.j2
-        dest: /tmp/ha-create.sh
-        force: yes
-        owner: root
-        group: root
-        mode: u+x
+- name: Get vmr version
+  shell: docker images | grep solace | awk '{printf "%s:%s", $1, $2}'
+  register: vmr_version
 
-    - name: Create the Container
-      shell: /tmp/ha-create.sh && docker start solace
+- name: Set Container Create Options
+  template:
+    src: ha-create.sh.j2
+    dest: /tmp/ha-create.sh
+    force: yes
+    owner: root
+    group: root
+    mode: u+x
 
-    - name: Prepare the assert-primary.sh file
-      template: 
-        src: assert-primary.j2.sh
-        dest: /tmp/assert-primary.sh
-        force: yes
-        mode: u+x
-      when: ha_role == "primary"
+- name: Create the Container
+  shell: /tmp/ha-create.sh && docker start solace
 
-    - name: Assert the primary event broker’s configuration
-      shell: /tmp/assert-primary.sh
-      when: ha_role == "primary"
+- name: Prepare the assert-primary.sh file
+  template:
+    src: assert-primary.j2.sh
+    dest: /tmp/assert-primary.sh
+    force: yes
+    mode: u+x
+  when: ha_role == "primary"
+
+- name: Assert the primary event broker’s configuration
+  shell: /tmp/assert-primary.sh
+  when: ha_role == "primary"
