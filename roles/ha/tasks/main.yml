@@ -2,7 +2,7 @@
     msg: "Creating **{{ ha_role }}** container of the HA group"
 
 - name: remove the existing "solace" container
-  shell: docker rm solace -f
+  shell: docker rm -f solace
   ignore_errors: yes
 
 - name: Get vmr version
@@ -21,14 +21,20 @@
 - name: Create the Container
   shell: /tmp/ha-create.sh && docker start solace
 
-- name: Prepare the assert-primary.sh file
+- name: Prepare the assert-leader.sh file
   template:
-    src: assert-primary.j2.sh
-    dest: /tmp/assert-primary.sh
+    src: assert-leader.sh
+    dest: /tmp/assert-leader.sh
     force: yes
     mode: u+x
   when: ha_role == "primary"
 
-- name: Assert the primary event broker’s configuration
-  shell: /tmp/assert-primary.sh
+- name: Asserting Event Brokers Router and VPN Configurations
+  shell: /tmp/assert-leader.sh
+  when: ha_role == "primary"
+  register: asserting_output
+
+- name: Print the asserting result
+  ansible.builtin.debug:
+    var: asserting_output.stdout_lines
   when: ha_role == "primary"
