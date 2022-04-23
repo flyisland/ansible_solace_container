@@ -1,6 +1,6 @@
-- name: install pubsub software on centos
+- name: install pubsub software on a single host
   hosts: all
-  gather_facts: no
+  gather_facts: yes
   become: yes
   roles:
     - docker
