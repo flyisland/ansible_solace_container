@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.1] - 2022-04-24
+
+Tested on  Ubuntu 18.04.6 LTS.
+
 ## [1.0] - 2022-04-19
 
 Tested on Centos 7.
