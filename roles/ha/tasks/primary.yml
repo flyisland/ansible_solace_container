@@ -1,0 +1,30 @@
+- name: Install xmllint CentOS
+  yum:
+    name: "xmlstarlet"
+    state: present
+  when:
+    - ansible_facts['distribution'] == "CentOS"
+
+- name: Install xmllint on Ubuntu
+  apt:
+    name: "libxml2-utils"
+    state: present
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+
+- name: Prepare the assert-leader.sh file
+  template:
+    src: assert-leader.sh
+    dest: /tmp/assert-leader.sh
+    force: yes
+    mode: u+x
+
+- name: Asserting Event Brokers Router and VPN Configurations
+  shell: /tmp/assert-leader.sh
+  args:
+    executable: /bin/bash # Run ls in the Bash shell
+  register: asserting_output
+
+- name: Print the asserting result
+  ansible.builtin.debug:
+    var: asserting_output.stdout_lines

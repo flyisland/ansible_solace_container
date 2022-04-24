@@ -21,20 +21,6 @@
 - name: Create the Container
   shell: /tmp/ha-create.sh && docker start solace
 
-- name: Prepare the assert-leader.sh file
-  template:
-    src: assert-leader.sh
-    dest: /tmp/assert-leader.sh
-    force: yes
-    mode: u+x
-  when: ha_role == "primary"
-
-- name: Asserting Event Brokers Router and VPN Configurations
-  shell: /tmp/assert-leader.sh
-  when: ha_role == "primary"
-  register: asserting_output
-
-- name: Print the asserting result
-  ansible.builtin.debug:
-    var: asserting_output.stdout_lines
+- name: Primary Docker
+  include_tasks: primary.yml
   when: ha_role == "primary"

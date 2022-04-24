@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 URL="http://127.0.0.1:8080/SEMP"
 USER="admin:admin"
