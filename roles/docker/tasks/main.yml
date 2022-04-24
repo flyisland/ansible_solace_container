@@ -3,3 +3,13 @@
   include_tasks: centos.yml
   when:
     - ansible_facts['distribution'] == "CentOS"
+
+- name: Install Docker Engine on Ubuntu
+  include_tasks: ubuntu.yml
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+
+- name: Start Docker
+  systemd:
+    state: started
+    name: docker

@@ -1,0 +1,40 @@
+# [Install Docker Engine on CentOS](https://docs.docker.com/engine/install/ubuntu/)
+
+---
+- name: Uninstall old versions of dockers
+  apt:
+    state: absent
+    pkg:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
+
+- name: Set up the repository 1 - Allow apt to use a repository over HTTPS
+  apt:
+    update_cache: yes
+    pkg:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+
+- name: Set up the repository 2 - Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Set up the repository 3 - Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: Install Docker CE
+  apt:
+    state: present
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+  become: yes

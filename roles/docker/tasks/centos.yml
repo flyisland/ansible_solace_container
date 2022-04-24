@@ -44,8 +44,3 @@
       - docker-ce-cli
       - containerd.io
   become: yes
-
-- name: Start Docker
-  systemd:
-    state: started
-    name: docker
