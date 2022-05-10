@@ -50,4 +50,5 @@ sudo docker create \
 --env 'redundancy_group_node_{{ router_name_suffix }}monitor_connectvia={{ monitoring_ip }}' \
 --env 'redundancy_group_node_{{ router_name_suffix }}monitor_nodetype=monitoring' \
 --env 'redundancy_authentication_presharedkey_key=VGhpcyBpcyBhIFByZS1TaGFyZWQgQXV0aGVudGljYXRpb24gS2V5IGZvciBQb0MK' \
+--env 'TZ=Asia/Shanghai' \
 --name=solace {{ vmr_version.stdout }}

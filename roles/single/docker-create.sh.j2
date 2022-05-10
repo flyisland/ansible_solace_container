@@ -28,4 +28,5 @@ sudo docker create \
 {% endif %}
 --env 'username_admin_globalaccesslevel=admin' \
 --env 'username_admin_password=admin' \
+--env 'TZ=Asia/Shanghai' \
 --name=solace {{ vmr_version.stdout }}
