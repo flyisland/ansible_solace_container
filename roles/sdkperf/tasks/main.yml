@@ -1,51 +1,65 @@
-- name: Install required packages
+- name: Install required packages on Centos
   become: yes
   yum:
     name: "{{ packages }}"
     state: present
   vars:
     packages:
-    - java-devel
-    - unzip
+      - java-devel
+      - unzip
+  when:
+    - ansible_facts['distribution'] == "CentOS"
+
+- name: Install required packages on Ubuntu
+  become: yes
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - openjdk-11-jre-headless
+      - unzip
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
 
 - name: Set JAVA_HOME environment variable
-  lineinfile: 
-    dest: '~/.bashrc'
+  lineinfile:
+    dest: "~/.bashrc"
     regexp: '^#?\s*export JAVA_HOME=(.*)$'
-    line: 'export JAVA_HOME=/usr/lib/jvm/java'
+    line: "export JAVA_HOME=/usr/lib/jvm/java"
     state: present
 
 - name: install SDKPERF_JAVA
   unarchive:
     src: "https://products.solace.com/download/SDKPERF_JAVA"
     dest: ~/
-    remote_src: yes        
+    remote_src: yes
     validate_certs: no
 
 - name: install SDKPERF_MQTT
   unarchive:
     src: "https://products.solace.com/download/SDKPERF_MQTT"
     dest: ~/
-    remote_src: yes        
+    remote_src: yes
     validate_certs: no
 
 - name: install SDKPERF_C
   unarchive:
     src: "https://products.solace.com/download/SDKPERF_C_LINUX64"
     dest: ~/
-    remote_src: yes        
+    remote_src: yes
     validate_certs: no
 
 - name: install JMS
   unarchive:
     src: "https://products.solace.com/download/SDKPERF_JMS"
     dest: ~/
-    remote_src: yes        
+    remote_src: yes
     validate_certs: no
 
 - name: install JMS_AMQP
   unarchive:
     src: "https://products.solace.com/download/SDKPERF_JMSAMQP"
     dest: ~/
-    remote_src: yes        
+    remote_src: yes
     validate_certs: no

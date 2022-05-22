@@ -1,6 +1,6 @@
-- name: install pubsub software on centos
+- name: install ps+ sdkperf software
   hosts: all
-  gather_facts: no
+  gather_facts: yes
   become: no
   roles:
     - sdkperf
